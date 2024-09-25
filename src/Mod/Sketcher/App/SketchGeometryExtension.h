@@ -55,19 +55,15 @@ enum InternalType
 };
 }
 
-namespace GeometryMode
-{
-enum GeometryMode
+enum class GeometryMode
 {
     Blocked = 0,
     Construction = 1,
     NumGeometryMode  // Must be the last
 };
-}
 
 class ISketchGeometryExtension
 {
-
 public:
     // Identification information
     virtual long getId() const = 0;
@@ -78,8 +74,8 @@ public:
     virtual void setInternalType(InternalType::InternalType type) = 0;
 
     // Geometry functional mode
-    virtual bool testGeometryMode(int flag) const = 0;
-    virtual void setGeometryMode(int flag, bool v = true) = 0;
+    virtual bool testGeometryMode(GeometryMode mode) const = 0;
+    virtual void setGeometryMode(GeometryMode mode, bool v = true) = 0;
 
     virtual int getGeometryLayerId() const = 0;
     virtual void setGeometryLayerId(int geolayer) = 0;
@@ -117,13 +113,13 @@ public:
         InternalGeometryType = type;
     }
 
-    bool testGeometryMode(int flag) const override
+    bool testGeometryMode(GeometryMode mode) const override
     {
-        return GeometryModeFlags.test((size_t)(flag));
+        return GeometryModeFlags.test(static_cast<size_t>(mode));
     };
-    void setGeometryMode(int flag, bool v = true) override
+    void setGeometryMode(GeometryMode mode, bool v = true) override
     {
-        GeometryModeFlags.set((size_t)(flag), v);
+        GeometryModeFlags.set(static_cast<size_t>(mode), v);
     };
 
     int getGeometryLayerId() const override
@@ -149,12 +145,11 @@ public:
                            "BSplineKnotPoint",
                            "ParabolaFocalAxis"}};
 
-    constexpr static std::array<const char*, GeometryMode::NumGeometryMode> geometrymode2str {
-        {"Blocked", "Construction"}};
+    constexpr static std::array<const char*, static_cast<size_t>(GeometryMode::NumGeometryMode)>
+        geometrymode2str {{"Blocked", "Construction"}};
 
     static bool getInternalTypeFromName(std::string str, InternalType::InternalType& type);
-
-    static bool getGeometryModeFromName(std::string str, GeometryMode::GeometryMode& type);
+    static bool getGeometryModeFromName(std::string str, GeometryMode& mode);
 
 protected:
     void copyAttributes(Part::GeometryExtension* cpy) const override;

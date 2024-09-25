@@ -32,7 +32,6 @@
 using namespace Sketcher;
 
 //---------- Geometry Extension
-
 TYPESYSTEM_SOURCE(Sketcher::SketchGeometryExtension, Part::GeometryMigrationPersistenceExtension)
 
 // scoped within the class, multithread ready
@@ -129,8 +128,7 @@ bool SketchGeometryExtension::getInternalTypeFromName(std::string str,
     return false;
 }
 
-bool SketchGeometryExtension::getGeometryModeFromName(std::string str,
-                                                      GeometryMode::GeometryMode& type)
+bool SketchGeometryExtension::getGeometryModeFromName(std::string str, GeometryMode& mode)
 {
     auto pos = std::find_if(SketchGeometryExtension::geometrymode2str.begin(),
                             SketchGeometryExtension::geometrymode2str.end(),
@@ -141,7 +139,7 @@ bool SketchGeometryExtension::getGeometryModeFromName(std::string str,
     if (pos != SketchGeometryExtension::geometrymode2str.end()) {
         int index = std::distance(SketchGeometryExtension::geometrymode2str.begin(), pos);
 
-        type = static_cast<GeometryMode::GeometryMode>(index);
+        mode = static_cast<GeometryMode>(index);
         return true;
     }
 

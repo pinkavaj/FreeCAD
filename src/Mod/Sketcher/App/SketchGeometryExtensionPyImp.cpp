@@ -139,7 +139,7 @@ PyObject* SketchGeometryExtensionPy::testGeometryMode(PyObject* args) const
     char* flag;
     if (PyArg_ParseTuple(args, "s", &flag)) {
 
-        GeometryMode::GeometryMode mode;
+        GeometryMode mode;
 
         if (getSketchGeometryExtensionPtr()->getGeometryModeFromName(flag, mode)) {
             return new_reference_to(
@@ -160,7 +160,7 @@ PyObject* SketchGeometryExtensionPy::setGeometryMode(PyObject* args)
     PyObject* bflag = Py_True;
     if (PyArg_ParseTuple(args, "s|O!", &flag, &PyBool_Type, &bflag)) {
 
-        GeometryMode::GeometryMode mode;
+        GeometryMode mode;
 
         if (getSketchGeometryExtensionPtr()->getGeometryModeFromName(flag, mode)) {
             getSketchGeometryExtensionPtr()->setGeometryMode(mode, Base::asBoolean(bflag));

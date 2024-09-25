@@ -140,13 +140,13 @@ public:
         getGeoExt()->setInternalType(type);
     }
 
-    bool testGeometryMode(int flag) const override
+    bool testGeometryMode(GeometryMode mode) const override
     {
-        return getGeoExt()->testGeometryMode(flag);
+        return getGeoExt()->testGeometryMode(mode);
     }
-    void setGeometryMode(int flag, bool v = true) override
+    void setGeometryMode(GeometryMode mode, bool v = true) override
     {
-        getGeoExt()->setGeometryMode(flag, v);
+        getGeoExt()->setGeometryMode(mode, v);
     }
 
     int getGeometryLayerId() const override
